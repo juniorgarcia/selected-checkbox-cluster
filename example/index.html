@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Checkbox Label Listing</title>
+	<script type="text/javascript" src="assets/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="../jquery.selected-checkbox-cluster.js"></script>
+	<script type="text/javascript" src="assets/mustache.min.js"></script>
+	<link type="text/javascript" src="assets/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/bootstrap.min.css">
+</head>
+
+<body>
+	<div class="container">
+		<h1 class="text-center">Selected checkbox cluster</h1>
+		<p>This plugin helps you to keep your checkboxes grouped on a label style to be easely removed, so that you don't have to
+			scroll in a large filter options. See the examples below.</p>
+	</div>
+	<hr>
+	<div class="container">
+		<div class="row">
+			<div class="col-4">
+				<aside class="filters">
+					<header>
+						<h4 class="filters__category">Brand</h4>
+						<script id="brands-listing-template" type="x-tmpl-mustache">
+							{{#brands}}
+							<div class="form-check">
+								<input type="checkbox" data-label="{{ . }}" class="form-check-input" name="brand[]" value="{{ . }}">
+								<label class="form-check-label">{{ . }}</label>
+							</div>
+							{{/brands}}
+						</script>
+						<div id="brands-listing">Loading...</div>
+					</header>
+					<hr>
+					<header>
+						<h4 class="filters__feature">Features</h4>
+						<script id="features-listing-template" type="x-tmpl-mustache">
+							{{#features}}
+							<div class="form-check">
+								<input type="checkbox" data-label="{{ . }}" class="form-check-input" name="features[]" value="{{ . }}">
+								<label class="form-check-label">{{ . }}</label>
+							</div>
+							{{/features}}
+						</script>
+						<div id="features-listing">Loading...</div>
+					</header>
+				</aside>
+			</div>
+			<div class="col-8">
+				<div id="products-listing" class="row">Loading...</div>
+				<script id="products-listing-template" type="x-tmpl-mustache">
+					{{#products}}
+					<div class="col-4 mb-4">
+						<div class="card card-product">
+							<div class="card-product-image-container">
+								<img class="card-product-image" src="assets/smartphone.jpeg">
+							</div>
+							<div class="card-body">
+								<div class="card-product-information-container">
+									<div class="card-product-description">
+										{{ name }}
+									</div>
+									<div class="row align-items-center mt-3">
+										<div class="card-product-price col">
+											$ {{ price }}
+										</div>
+										<div class="card-product-cta col">
+											<a href="javascript:;" class="btn btn-primary">Buy it!</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					{{/products}}
+				</script>
+			</div>
+		</div>
+	</div>
+	<!-- Dont't care about the templating things. I did that because I'm lazy
+		¯\_(ツ)_/¯ -->
+	<script type="text/javascript" src="assets/templating-stuff.js"></script>
+	<script>
+		(function ($) {
+			// Configuring the cluster. We want that every marked checkbox shows
+			// up in the cluster.
+			var $checkboxCluster = $('.filters').selectedCheckboxCluster({
+				customClusterWrapperClass: 'my-cluster-wrapper-class',
+				clusterContainer: $('.filters'),
+				// Example of the events
+				onCheckCheckbox: function ($checkbox) {
+					console.log('Checking checkbox "' + $checkbox.data('label') + '"!');
+				},
+				onUncheckCheckbox: function ($checkbox) {
+					console.log('Unchecking checkbox "' + $checkbox.data('label') + '"!');
+				},
+				onAddLabel: function ($label) {
+					console.log('Adding label "' + $label.data('value') + '"');
+				},
+				onRemoveLabel: function ($label) {
+					console.log('Removing label "' + $label.data('value') + '"');
+				},
+			});
+		})(jQuery);
+	</script>
+	<style>
+		.card-product-image {
+			object-fit: cover;
+			width: 100%;
+			padding-top: 20px;
+		}
+
+		.checkbox-label-cluster {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.checkbox-label-cluster>div {
+			margin-bottom: 5px;
+			padding: 4px;
+			display: flex;
+			align-items: center;
+			background: #ddd;
+			margin-right: 4px;
+			border-radius: 10px;
+		}
+
+		.checkbox-label-cluster>div>.delete-label {
+			width: 28px;
+			height: 28px;
+			border-radius: 4px;
+			margin-left: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0;
+		}
+
+	</style>
+</body>
+
+</html>
