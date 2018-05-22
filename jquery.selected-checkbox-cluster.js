@@ -9,6 +9,9 @@
   let DEFAULTS = {
         // DOM customization
         customClusterWrapperClass: 'filter-cluster',
+
+        // These classes are space separated, as normal classes on HTML elements.
+        customButtonWrapperClasses: '',
         clusterContainerSelector: null,
 
         // CALLBACKS
@@ -20,7 +23,7 @@
         },
         onRemoveLabel: function (label) {
         },
-        labelTemplate: '<div data-value><span></span><button class="btn btn-danger delete-label"><span>&times;</span></button></div>'
+        labelTemplate: '<div data-value><span></span><button class="delete-label-button"><span>&times;</span></button></div>'
       },
       pluginName = 'selectedCheckboxCluster';
 
@@ -105,7 +108,7 @@
       $label.find('span:first').html($checkbox.data('label'));
 
       // Configuring triggers for when the user clicks the "delete" button.
-      $label.find('.delete-label').click(function (e) {
+      $label.find('.delete-label-button').click(function (e) {
         // Could prevent a form from submit.
         e.preventDefault();
         base._removeLabelFromContainer(base._findCheckboxForLabel($label));
@@ -113,12 +116,12 @@
 
       return $label;
     },
-    _createLabelsForCheckedItems: function() {
+    _createLabelsForCheckedItems: function () {
       let base = this;
-      $(this.checkboxes).each(function(index, checkbox) {
+      $(this.checkboxes).each(function (index, checkbox) {
         let $checkbox = $(checkbox);
         if ($checkbox.prop('checked') === true) {
-          console.info('Checkbox "' + $checkbox.data('label')  + '" is checked, creating label on DOM.');
+          console.info('Checkbox "' + $checkbox.data('label') + '" is checked, creating label on DOM.');
           base._addLabelToContainer(base._createLabelDOMObject($checkbox));
         }
       });
