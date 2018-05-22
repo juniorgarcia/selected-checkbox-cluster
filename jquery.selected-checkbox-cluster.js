@@ -89,6 +89,7 @@
         $label.remove();
         this.settings.onRemoveLabel.call(this, $label);
         $checkbox.prop('checked', false);
+        $checkbox.trigger('change')
       }
     },
     _findLabelForCheckbox: function ($checkbox) {
